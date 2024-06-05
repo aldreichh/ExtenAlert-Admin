@@ -14,7 +14,7 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import BlacklistedURLs from '../components/BlacklistedURLs';
+import VirusTotalReportsURLs from '../components/VirusTotalReports';
 import Button from '@mui/material/Button';
 import BeenhereIcon from '@mui/icons-material/Beenhere';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
@@ -74,7 +74,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const defaultTheme = createTheme();
 
   
-function BlacklistedPage() {
+function VirusTotalReports() {
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
     const toggleDrawer = () => {
@@ -152,7 +152,7 @@ function BlacklistedPage() {
                 <ChevronLeftIcon />
                 </IconButton>
             </Toolbar>
-            <Divider/>
+            <Divider />
             <List component="nav">
                 <Button
                     sx={{ width: '100%' }}
@@ -161,15 +161,11 @@ function BlacklistedPage() {
                 >
                     {open ? 'Whitelisted URLs' : null}
                 </Button>
-                <Divider sx={{ my: 1}} />
+                <Divider sx={{ my: 1 }} />
                 <Button
-                    sx={{ 
-                        width: '100%',         
-                        backgroundColor: '#bae6fd',
-                        borderRadius:'0'
-                    }}
+                    sx={{ width: '100%' }}
                     onClick={handleBlacklistedButton}
-                    startIcon={<RemoveCircleIcon/>}
+                    startIcon={<RemoveCircleIcon />}
                 >
                     {open ? 'Blacklisted URLs' : null}
                 </Button>
@@ -191,7 +187,11 @@ function BlacklistedPage() {
                 </Button>
                 <Divider sx={{ my: 1 }} />
                 <Button
-                    sx={{ width: '100%' }}
+                    sx={{ 
+                        width: '100%',         
+                        backgroundColor: '#bae6fd',
+                        borderRadius:'0'
+                    }}
                     onClick={handleVirusTotalButton}
                     startIcon={<ApiIcon />}
                 >
@@ -230,7 +230,7 @@ function BlacklistedPage() {
                         height: '85vh',
                     }}
                     >
-                    <BlacklistedURLs/>
+                    <VirusTotalReportsURLs/>
                     </Paper>
                 </Grid>
                 </Grid>
@@ -242,4 +242,4 @@ function BlacklistedPage() {
     );
 }
 
-export default BlacklistedPage;
+export default VirusTotalReports;

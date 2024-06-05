@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import TextField from '@mui/material/TextField';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,7 +7,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import TextField from '@mui/material/TextField';
 import { TableVirtuoso } from 'react-virtuoso';
 
 // Define columns for the table
@@ -25,12 +25,7 @@ const columns = [
     width: 50,
     label: 'Status',
     dataKey: 'status',
-  },
-  {
-    width: 50,
-    label: 'Threat Level',
-    dataKey: 'threat_level',
-  },
+  }
 ];
 
 const VirtuosoTableComponents = {
@@ -82,16 +77,16 @@ function rowContent(_index, row) {
   );
 }
 
-export default function WhitelistedURLs() {
-  const [whitelistedUrls, setWhitelistedUrls] = useState([]);
+export default function IncomingReports() {
+  const [unratedReports, setUnratedReports] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     // Fetch whitelisted URLs
-    fetch('http://localhost:5000/whitelisted-urls')
+    fetch('http://localhost:5000/unrated-reports')
       .then(response => response.json())
-      .then(data => setWhitelistedUrls(data))
-      .catch(error => console.error('Error fetching whitelisted URLs:', error));
+      .then(data => setUnratedReports(data))
+      .catch(error => console.error('Error fetching incoming reports:', error));
   }, []);
 
   // Handle search input change
@@ -100,30 +95,29 @@ export default function WhitelistedURLs() {
   };
 
   // Filter reports based on search query
-  const filteredReports = whitelistedUrls.filter((report) =>
+  const filteredReports = unratedReports.filter((report) =>
     report.url.toLowerCase().includes(searchQuery.toLowerCase())
   );
-  
 
   return (
     <>
-      <TextField
-        style={{ marginTop:'-1px'}}
-        label="Search URL"
-        variant="outlined"
-        fullWidth
-        margin="normal"
-        value={searchQuery}
-        onChange={handleSearchChange}
-      />
-      <Paper style={{ height: '100%', width: '100%'}}>
-        <TableVirtuoso
-          data={filteredReports}
-          components={VirtuosoTableComponents}
-          fixedHeaderContent={fixedHeaderContent}
-          itemContent={rowContent}
+        <TextField
+            style={{ marginTop:'-1px'}}    
+            label="Search URL"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={searchQuery}
+            onChange={handleSearchChange}
         />
-      </Paper>
+        <Paper style={{ height: '100%', width: '100%' }}>
+        <TableVirtuoso
+            data={filteredReports}
+            components={VirtuosoTableComponents}
+            fixedHeaderContent={fixedHeaderContent}
+            itemContent={rowContent}
+        />
+        </Paper>
     </>
   );
 }

@@ -19,6 +19,9 @@ import Button from '@mui/material/Button';
 import BeenhereIcon from '@mui/icons-material/Beenhere';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import MoveToInboxIcon from '@mui/icons-material/MoveToInbox';
+import ApiIcon from '@mui/icons-material/Api';
+import HelpCenterIcon from '@mui/icons-material/HelpCenter';
 import { useNavigate } from 'react-router-dom';
   
 const drawerWidth = 240;
@@ -73,7 +76,7 @@ const defaultTheme = createTheme();
   
 function WhitelistedPage() {
     const navigate = useNavigate();
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
     const toggleDrawer = () => {
         setOpen(!open);
     };
@@ -84,6 +87,18 @@ function WhitelistedPage() {
 
     const handleBlacklistedButton = () => {
         navigate('/blacklisted_data');
+    }
+
+    const handleIncomingButton = () => {
+        navigate('/incoming_reports');
+    }
+
+    const handleUnratedButton = () => {
+        navigate('/unrated_reports');
+    }
+
+    const handleVirusTotalButton = () => {
+        navigate('/virustotal_reports');
     }
 
     const handleLogoutButton = () => {
@@ -140,7 +155,11 @@ function WhitelistedPage() {
             <Divider />
             <List component="nav">
                 <Button
-                    sx={{ width: '100%' }}
+                    sx={{ 
+                        width: '100%',         
+                        backgroundColor: '#bae6fd',
+                        borderRadius:'0'
+                    }}
                     onClick={handleWhitelistedButton}
                     startIcon={<BeenhereIcon />}
                 >
@@ -153,6 +172,30 @@ function WhitelistedPage() {
                     startIcon={<RemoveCircleIcon />}
                 >
                     {open ? 'Blacklisted URLs' : null}
+                </Button>
+                <Divider sx={{ my: 1 }} />
+                <Button
+                    sx={{ width: '100%' }}
+                    onClick={handleIncomingButton}
+                    startIcon={<MoveToInboxIcon />}
+                >
+                    {open ? 'Incoming Reports' : null}
+                </Button>
+                <Divider sx={{ my: 1 }} />
+                <Button
+                    sx={{ width: '100%' }}
+                    onClick={handleUnratedButton}
+                    startIcon={<HelpCenterIcon />}
+                >
+                    {open ? 'Unrated Reports' : null}
+                </Button>
+                <Divider sx={{ my: 1 }} />
+                <Button
+                    sx={{ width: '100%' }}
+                    onClick={handleVirusTotalButton}
+                    startIcon={<ApiIcon />}
+                >
+                    {open ? 'VirusTotal Reports' : null}
                 </Button>
                 <Divider sx={{ my: 1 }} />
                 <Button

@@ -6,6 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import TextField from '@mui/material/TextField';
 import { TableVirtuoso } from 'react-virtuoso';
 
 // Define columns for the table
@@ -83,6 +84,7 @@ function rowContent(_index, row) {
 
 export default function WhitelistedURLs() {
   const [blacklistedUrls, setBlacklistedUrls] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
   
   useEffect(() => {
     // Fetch whitelisted URLs
@@ -92,14 +94,35 @@ export default function WhitelistedURLs() {
       .catch(error => console.error('Error fetching blacklisted URLs:', error));
   }, []);
 
+  // Handle search input change
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  // Filter reports based on search query
+  const filteredReports = blacklistedUrls.filter((report) =>
+    report.url.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  
   return (
-    <Paper style={{ height: '100%', width: '100%' }}>
-      <TableVirtuoso
-        data={blacklistedUrls}
-        components={VirtuosoTableComponents}
-        fixedHeaderContent={fixedHeaderContent}
-        itemContent={rowContent}
+    <>
+      <TextField
+        style={{ marginTop:'-1px'}}    
+        label="Search URL"
+        variant="outlined"
+        fullWidth
+        margin="normal"
+        value={searchQuery}
+        onChange={handleSearchChange}
       />
-    </Paper>
+      <Paper style={{ height: '100%', width: '100%' }}>
+        <TableVirtuoso
+          data={filteredReports}
+          components={VirtuosoTableComponents}
+          fixedHeaderContent={fixedHeaderContent}
+          itemContent={rowContent}
+        />
+      </Paper>
+    </>
   );
 }

@@ -82,16 +82,16 @@ function rowContent(_index, row) {
   );
 }
 
-export default function WhitelistedURLs() {
-  const [whitelistedUrls, setWhitelistedUrls] = useState([]);
+export default function VirusTotalReports() {
+  const [VirusTotalReports, setVirusTotalReports] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-
+  
   useEffect(() => {
     // Fetch whitelisted URLs
-    fetch('http://localhost:5000/whitelisted-urls')
+    fetch('http://localhost:5000/virustotal-reports')
       .then(response => response.json())
-      .then(data => setWhitelistedUrls(data))
-      .catch(error => console.error('Error fetching whitelisted URLs:', error));
+      .then(data => setVirusTotalReports(data))
+      .catch(error => console.error('Error fetching incoming reports:', error));
   }, []);
 
   // Handle search input change
@@ -100,30 +100,30 @@ export default function WhitelistedURLs() {
   };
 
   // Filter reports based on search query
-  const filteredReports = whitelistedUrls.filter((report) =>
+  const filteredReports = VirusTotalReports.filter((report) =>
     report.url.toLowerCase().includes(searchQuery.toLowerCase())
   );
-  
+
 
   return (
     <>
-      <TextField
-        style={{ marginTop:'-1px'}}
-        label="Search URL"
-        variant="outlined"
-        fullWidth
-        margin="normal"
-        value={searchQuery}
-        onChange={handleSearchChange}
-      />
-      <Paper style={{ height: '100%', width: '100%'}}>
-        <TableVirtuoso
-          data={filteredReports}
-          components={VirtuosoTableComponents}
-          fixedHeaderContent={fixedHeaderContent}
-          itemContent={rowContent}
+        <TextField
+            style={{ marginTop:'-1px'}}        
+            label="Search URL"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={searchQuery}
+            onChange={handleSearchChange}
         />
-      </Paper>
+        <Paper style={{ height: '100%', width: '100%' }}>
+        <TableVirtuoso
+            data={filteredReports}
+            components={VirtuosoTableComponents}
+            fixedHeaderContent={fixedHeaderContent}
+            itemContent={rowContent}
+        />
+        </Paper>
     </>
   );
 }
